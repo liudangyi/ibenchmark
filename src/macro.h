@@ -12,11 +12,21 @@
 int global_count;
 
 #define BEGIN_TEST(name, count) \
-    void test_##name(int time) { \
+    void test_##name(int times) { \
         global_count = count; \
-        for (int i = 0; i < time * count; ++i) {
+        for (int i = 0; i < times * count; ++i) {
 
 #define END_TEST }}
+
+#define BEGIN_TEST_PREP(name) \
+    void test_##name(int times) {
+
+#define BEGIN_TEST_LOOP(count) \
+        global_count = count; \
+        for (int i = 0; i < times * count; ++i) {
+
+#define END_TEST_LOOP }
+#define END_TEST_PREP }
 
 #define IBEN_TEST_H
 
