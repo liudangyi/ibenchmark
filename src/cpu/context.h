@@ -17,7 +17,7 @@ BEGIN_TEST_PREP(switch_process)
         close(pipes[3]); // write
         is_child = 0;
     }
-BEGIN_TEST_LOOP(1e5)
+BEGIN_TEST_LOOP(100)
     if (is_child) {
         assert(read(pipes[0], buf, 100));
         assert(write(pipes[3], "test", 4));
@@ -52,7 +52,7 @@ BEGIN_TEST_PREP(switch_thread)
     void *args;
 
     switch_thread_times = times;
-    global_count = 1e5;
+    global_count = 100;
     pipe(pipes);
     pipe(pipes+2);
     pthread_create(&k, NULL, &child_thread, args);

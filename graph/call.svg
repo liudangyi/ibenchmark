@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- Generator: DataGraph - https://www.visualdatatools.com/DataGraph/index.html  --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="873.5" height="448" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g>
+  <!-- Background -->
+  <g id="Background">
+    <defs>
+      <clipPath id="clipPath">
+        <rect x="56.5" y="9.5" width="801" height="412"/>
+      </clipPath>
+    </defs>
+    <!-- Grid -->
+    <g id="Grid" clip-path="url(#clipPath)">
+      <path d="M 170.929 421.5 L 170.929 9.5 M 285.357 421.5 L 285.357 9.5 M 399.786 421.5 L 399.786 9.5 
+               M 514.214 421.5 L 514.214 9.5 M 628.643 421.5 L 628.643 9.5 M 743.071 421.5 L 743.071 9.5 "
+        stroke="black" stroke-dasharray="0.0103781,4.15124" stroke-dashoffset="0.00518905" stroke-linecap="round" fill="none" stroke-width="0.5"/>
+      <path d="M 56.5 384.045 L 857.5 384.045 M 56.5 346.591 L 857.5 346.591 M 56.5 309.136 L 857.5 309.136 
+               M 56.5 271.682 L 857.5 271.682 M 56.5 234.227 L 857.5 234.227 M 56.5 196.773 L 857.5 196.773 
+               M 56.5 159.318 L 857.5 159.318 M 56.5 121.864 L 857.5 121.864 M 56.5 84.4091 L 857.5 84.4091 
+               M 56.5 46.9545 L 857.5 46.9545 "
+        stroke="black" stroke-dasharray="0.00983993,3.93597" stroke-dashoffset="0.00491997" stroke-linecap="round" fill="none" stroke-width="0.5"/>
+    </g>
+  </g>
+  <!-- Commands -->
+  <g id="Commands">
+    <!-- y vs x -->
+    <g id="y_vs_x">
+      <defs>
+        <clipPath id="clipPath2">
+          <rect x="56.5" y="9.5" width="801" height="412"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#clipPath2)">
+        <path d="M 56.5 47.7036 L 170.929 50.7 L 285.357 107.631 L 399.786 91.9 L 514.214 52.1982 L 628.643 119.616 
+                 L 743.071 75.42 L 857.5 107.631 "
+          stroke="black" fill="none" stroke-width="0.5"/>
+      </g>
+    </g>
+  </g>
+  <!-- Foreground -->
+  <g id="Foreground">
+    <!-- Y Axis -->
+    <g id="Y_Axis">
+      <!-- Y Labels -->
+      <g id="Y_Labels">
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="39.4262" y="425.804">0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="388.349">0.5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="350.895">1.0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="313.44">1.5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="275.986">2.0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="238.531">2.5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="201.076">3.0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="163.622">3.5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="126.167">4.0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="88.7128">4.5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="51.2583">5.0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="29.4184" y="13.8037">5.5</text>
+        </g>
+      </g>
+      <path d="M 48.5 421.5 L 56.5 421.5 M 52.5 414.009 L 56.5 414.009 M 52.5 406.518 L 56.5 406.518 
+               M 52.5 399.027 L 56.5 399.027 M 52.5 391.536 L 56.5 391.536 M 48.5 384.045 L 56.5 384.045 
+               M 52.5 376.555 L 56.5 376.555 M 52.5 369.064 L 56.5 369.064 M 52.5 361.573 L 56.5 361.573 
+               M 52.5 354.082 L 56.5 354.082 M 48.5 346.591 L 56.5 346.591 M 52.5 339.1 L 56.5 339.1 
+               M 52.5 331.609 L 56.5 331.609 M 52.5 324.118 L 56.5 324.118 M 52.5 316.627 L 56.5 316.627 
+               M 48.5 309.136 L 56.5 309.136 M 52.5 301.645 L 56.5 301.645 M 52.5 294.155 L 56.5 294.155 
+               M 52.5 286.664 L 56.5 286.664 M 52.5 279.173 L 56.5 279.173 M 48.5 271.682 L 56.5 271.682 
+               M 52.5 264.191 L 56.5 264.191 M 52.5 256.7 L 56.5 256.7 M 52.5 249.209 L 56.5 249.209 
+               M 52.5 241.718 L 56.5 241.718 M 48.5 234.227 L 56.5 234.227 M 52.5 226.736 L 56.5 226.736 
+               M 52.5 219.245 L 56.5 219.245 M 52.5 211.755 L 56.5 211.755 M 52.5 204.264 L 56.5 204.264 
+               M 48.5 196.773 L 56.5 196.773 M 52.5 189.282 L 56.5 189.282 M 52.5 181.791 L 56.5 181.791 
+               M 52.5 174.3 L 56.5 174.3 M 52.5 166.809 L 56.5 166.809 M 48.5 159.318 L 56.5 159.318 
+               M 52.5 151.827 L 56.5 151.827 M 52.5 144.336 L 56.5 144.336 M 52.5 136.845 L 56.5 136.845 
+               M 52.5 129.355 L 56.5 129.355 M 48.5 121.864 L 56.5 121.864 M 52.5 114.373 L 56.5 114.373 
+               M 52.5 106.882 L 56.5 106.882 M 52.5 99.3909 L 56.5 99.3909 M 52.5 91.9 L 56.5 91.9 M 48.5 84.4091 L 56.5 84.4091 
+               M 52.5 76.9182 L 56.5 76.9182 M 52.5 69.4273 L 56.5 69.4273 M 52.5 61.9364 L 56.5 61.9364 
+               M 52.5 54.4455 L 56.5 54.4455 M 48.5 46.9545 L 56.5 46.9545 M 52.5 39.4636 L 56.5 39.4636 
+               M 52.5 31.9727 L 56.5 31.9727 M 52.5 24.4818 L 56.5 24.4818 M 52.5 16.9909 L 56.5 16.9909 
+               M 48.5 9.5 L 56.5 9.5 "
+        stroke="black" fill="none" stroke-width="0.5"/>
+    </g>
+    <!-- X Axis -->
+    <g id="X_Axis">
+      <g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="53.1631" y="440.69">0</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="167.592" y="440.69">1</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="282.02" y="440.69">2</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="396.449" y="440.69">3</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="510.877" y="440.69">4</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="625.306" y="440.69">5</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="739.735" y="440.69">6</text>
+        </g>
+        <g font-family="Helvetica" font-size="12" fill="black">
+          <text x="854.163" y="440.69">7</text>
+        </g>
+      </g>
+      <path d="M 56.5 429.5 L 56.5 421.5 M 170.929 429.5 L 170.929 421.5 M 285.357 429.5 L 285.357 421.5 
+               M 399.786 429.5 L 399.786 421.5 M 514.214 429.5 L 514.214 421.5 M 628.643 429.5 L 628.643 421.5 
+               M 743.071 429.5 L 743.071 421.5 M 857.5 429.5 L 857.5 421.5 M 113.714 425.5 L 113.714 421.5 
+               M 228.143 425.5 L 228.143 421.5 M 342.571 425.5 L 342.571 421.5 M 457 425.5 L 457 421.5 
+               M 571.429 425.5 L 571.429 421.5 M 685.857 425.5 L 685.857 421.5 M 800.286 425.5 L 800.286 421.5 "
+        stroke="black" fill="none" stroke-width="0.5"/>
+    </g>
+    <path d="M 857.5 421.5 L 857.5 9.5 L 56.5 9.5 L 56.5 421.5 L 857.5 421.5 z "
+      stroke="black" stroke-linecap="square" fill="none" stroke-width="0.5"/>
+  </g>
+</g>
+</svg>

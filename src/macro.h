@@ -12,18 +12,18 @@
 int global_count;
 
 #define BEGIN_TEST(name, count) \
-    void test_##name(int times) { \
-        global_count = count; \
-        for (int i = 0; i < times * count; ++i) {
+    BEGIN_TEST_PREP(name) \
+    BEGIN_TEST_LOOP(count)
 
 #define END_TEST }}
 
 #define BEGIN_TEST_PREP(name) \
+    __attribute__((noinline)) \
     void test_##name(int times) {
 
 #define BEGIN_TEST_LOOP(count) \
         global_count = count; \
-        for (int i = 0; i < times * count; ++i) {
+        for (int i = times * count; i; --i) {
 
 #define END_TEST_LOOP }
 #define END_TEST_PREP }

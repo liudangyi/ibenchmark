@@ -1,7 +1,11 @@
-BEGIN_TEST(getpid, 1e8)
+BEGIN_TEST(getpid, 100000000)
     getpid();
 END_TEST
 
-BEGIN_TEST(getuid, 1e7)
+BEGIN_TEST(getuid, 10000000)
     getuid();
+END_TEST
+
+BEGIN_TEST(getppid, 10000000)
+    getppid();
 END_TEST

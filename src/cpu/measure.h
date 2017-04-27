@@ -5,10 +5,10 @@ BEGIN_TEST(nanosleep, 1)
     nanosleep(&ts, 0);
 END_TEST
 
-BEGIN_TEST(loop, 1e9)
-    asm("nop");
+BEGIN_TEST(loop, 10000000)
+    asm("");
 END_TEST
 
-BEGIN_TEST(rdtsc, 1e8)
+BEGIN_TEST(rdtsc, 1000000)
     __rdtsc();
 END_TEST

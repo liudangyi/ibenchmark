@@ -31,5 +31,6 @@ int main(int argc, char const *argv[]) {
     uint64_t duration = timeit();
     double cpi = ((double) duration) / global_count;
     printf("count = %d, cycles = %f, time = %fns\n", global_count, cpi, cpi / TSC_FREQ);
+    printf("%.2f cycles, %.2f ns\n", cpi, cpi / TSC_FREQ);
     return 0;
 }
