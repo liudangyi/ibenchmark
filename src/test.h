@@ -5,3 +5,5 @@
 #include "cpu/syscall.h"
 #include "cpu/task.h"
 #include "cpu/context.h"
+
+#include "memory/latency.h"
