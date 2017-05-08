@@ -23,7 +23,7 @@ int global_count;
 
 #define BEGIN_TEST_LOOP(count) \
         global_count = count; \
-        for (int i = times * count; i; --i) {
+        for (int i = times * global_count; i; --i) {
 
 #define END_TEST_LOOP }
 #define END_TEST_PREP }
