@@ -58,5 +58,5 @@ void test_mem_latency_4m(int times) { general_latency_test(4 << 20, times, 4); }
 void test_mem_latency_8m(int times) { general_latency_test(8 << 20, times, 4); }
 void test_mem_latency_16m(int times) { general_latency_test(16 << 20, times, 2); }
 void test_mem_latency_32m(int times) { general_latency_test(32 << 20, times, 2); }
-void test_mem_latency_64m(int times) { general_latency_test(64 << 20, times, 1); }
-void test_mem_latency_128m(int times) { general_latency_test(128 << 20, times, 1); }
+void test_mem_latency_64m(int times) { general_latency_test(64 << 20, times, 2); }
+void test_mem_latency_128m(int times) { general_latency_test(128 << 20, times, 2); }
