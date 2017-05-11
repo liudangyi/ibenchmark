@@ -44,8 +44,9 @@ int main(int argc, char const *argv[]) {
     const char *TEST_NAME = argv[2];
     double cpis[TEST_NUMBER];
 
-    _test_func = (void *) strtoull(argv[3], 0, 0);
+    _test_func = (void *) main + strtol(argv[3], 0, 0);
     printf("========== %s @ %p ==========\n", TEST_NAME, _test_func);
+    fflush(stdout);
     for (int i = 0; i < TEST_NUMBER; i++) {
         uint64_t duration;
         double cpi;
