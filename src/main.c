@@ -10,13 +10,7 @@
 
 #define TSC_FREQ 2.592000000
 
-#ifndef TEST_NUMBER
-#define TEST_NUMBER 10
-#endif
-
-#ifndef TEST_NAME
-#define TEST_NAME test_loop
-#endif
+void (*_test_func)(int);
 
 uint64_t time_single(int times) {
     uint32_t cycles_low0, cycles_high0, cycles_low1, cycles_high1;
@@ -28,7 +22,7 @@ uint64_t time_single(int times) {
                   : "=r" (cycles_high0), "=r" (cycles_low0)
                   :: "%rax", "%rbx", "%rcx", "%rdx");
 
-    TEST_NAME(times);
+    _test_func(times);
 
     asm volatile ("rdtscp\n\t"
                   "mov %%edx, %0\n\t"
@@ -46,7 +40,12 @@ uint64_t time_delta() {
 }
 
 int main(int argc, char const *argv[]) {
+    int TEST_NUMBER = atoi(argv[1]);
+    const char *TEST_NAME = argv[2];
     double cpis[TEST_NUMBER];
+
+    _test_func = (void *) strtoull(argv[3], 0, 0);
+    printf("========== %s @ %p ==========\n", TEST_NAME, _test_func);
     for (int i = 0; i < TEST_NUMBER; i++) {
         uint64_t duration;
         double cpi;
