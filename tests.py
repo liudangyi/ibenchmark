@@ -20,7 +20,8 @@ def build():
     global TESTS_MAP
     if not skip_build():
         print('Building...')
-        os.system('cd {} && mkdir -p build && cd build && clang -O2 --save-temps ../src/main.c -o main'.format(ROOT))
+        cmd = 'cd {} && mkdir -p build && cd build && clang -O2 --save-temps ../src/main.c -o main'.format(ROOT)
+        assert os.system(cmd) == 0, 'clang exits non-zero!'
         TESTS_MAP = None
     if TESTS_MAP is None:
         stdout, _ = Popen('nm {}/build/main | grep "^0"'.format(ROOT), stdout=PIPE, shell=True).communicate()
@@ -44,10 +45,10 @@ def run_test(name, repeat=10):
         process = Popen('{}/build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name]), stdout=PIPE, stderr=PIPE, shell=True)
         stdout, stderr = process.communicate()
         if process.returncode != 0 or stderr != '':
-            print('Test {} returns {}'.format(name, process.returncode), file=sys.stderr)
             sys.stderr.write(stderr.decode())
             sys.stdout.write(stdout.decode())
-            return
+            print('Test {} returns {}'.format(name, process.returncode), file=sys.stderr)
+            raise Exception('Test {} returns {}'.format(name, process.returncode))
         else:
             for line in stdout.decode().splitlines():
                 match = re.search(r'cycles = ([\d.]+)', line)

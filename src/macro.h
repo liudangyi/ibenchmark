@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <x86intrin.h>
 
-int global_count;
+uint64_t global_count;
 
 #define BEGIN_TEST(name, count) \
     BEGIN_TEST_PREP(name) \

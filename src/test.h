@@ -7,3 +7,4 @@
 #include "cpu/context.h"
 
 #include "memory/latency.h"
+#include "memory/bandwidth.h"
