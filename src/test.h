@@ -8,3 +8,4 @@
 
 #include "memory/latency.h"
 #include "memory/bandwidth.h"
+#include "memory/pagefault.h"

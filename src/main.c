@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
 
         duration = time_delta();
         cpi = ((double) duration) / global_count;
-        printf("count = %d, cycles = %f, time = %fns\n", global_count, cpi, cpi / TSC_FREQ);
+        printf("count = %llu, cycles = %f, time = %fns\n", global_count, cpi, cpi / TSC_FREQ);
         cpis[i] = cpi;
     }
 

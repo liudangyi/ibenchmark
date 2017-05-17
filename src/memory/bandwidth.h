@@ -35,7 +35,7 @@ END_TEST_PREP
 
 BEGIN_TEST_PREP(mem_bandwidth_memset)
     const size_t size = 64 << 20;
-    volatile uint64_t *array = malloc(size);
+    uint64_t *array = malloc(size);
 BEGIN_TEST_LOOP(8)
     memset(array, 0x80, size);
 END_TEST_LOOP
@@ -47,8 +47,8 @@ END_TEST_PREP
 
 BEGIN_TEST_PREP(mem_bandwidth_memcpy)
     const size_t size = 64 << 20;
-    volatile uint64_t *array1 = malloc(size);
-    volatile uint64_t *array2 = malloc(size);
+    uint64_t *array1 = malloc(size);
+    uint64_t *array2 = malloc(size);
 BEGIN_TEST_LOOP(8)
     memcpy(array1, array2, size);
 END_TEST_LOOP

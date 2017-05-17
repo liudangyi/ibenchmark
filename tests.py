@@ -4,6 +4,7 @@ from glob import glob
 from subprocess import Popen, PIPE
 from itertools import imap
 import re
+import time
 
 ROOT = os.path.abspath(__file__ + '/../')
 TARGET = ROOT + '/build/main'
@@ -21,7 +22,12 @@ def build():
     if not skip_build():
         print('Building...')
         cmd = 'cd {} && mkdir -p build && cd build && clang -O2 --save-temps ../src/main.c -o main'.format(ROOT)
-        assert os.system(cmd) == 0, 'clang exits non-zero!'
+        process = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = process.communicate()
+        if process.returncode != 0:
+            sys.stdout.write(stdout.decode())
+            sys.stderr.write(stderr.decode())
+            raise Exception('clang exits non-zero!')
         TESTS_MAP = None
     if TESTS_MAP is None:
         stdout, _ = Popen('nm {}/build/main | grep "^0"'.format(ROOT), stdout=PIPE, shell=True).communicate()
@@ -39,8 +45,9 @@ def build():
 def run_test(name, repeat=10):
     build()
     assert name in TESTS_MAP, 'No test called ' + name
-    print('Running test {} for {} times...'.format(name, repeat))
+    print('Running test {} for {} times...'.format(name, repeat), end='')
     res = []
+    start = time.time()
     for _ in range(repeat):
         process = Popen('{}/build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name]), stdout=PIPE, stderr=PIPE, shell=True)
         stdout, stderr = process.communicate()
@@ -54,6 +61,7 @@ def run_test(name, repeat=10):
                 match = re.search(r'cycles = ([\d.]+)', line)
                 if match:
                     res.append(float(match.group(1)))
+    print(' Duration: {:.3f}s'.format(time.time() - start))
     return res
 
 def run_tests(*test_names, **kargs):
