@@ -17,13 +17,13 @@ BEGIN_TEST_PREP(switch_process)
         close(pipes[3]); // write
         is_child = 0;
     }
-BEGIN_TEST_LOOP(100)
+BEGIN_TEST_LOOP(10000)
     if (is_child) {
-        assert(read(pipes[0], buf, 100));
-        assert(write(pipes[3], "test", 4));
+        assert(read(pipes[0], buf, 100) == 4);
+        assert(write(pipes[3], "test", 4) == 4);
     } else {
-        assert(write(pipes[1], "test", 4));
-        assert(read(pipes[2], buf, 100));
+        assert(write(pipes[1], "test", 4) == 4);
+        assert(read(pipes[2], buf, 100) == 4);
     }
 END_TEST_LOOP
     if (is_child) {
@@ -41,8 +41,8 @@ int switch_thread_times;
 
 void *child_thread(void *args) {
     for (int i = 0; i < switch_thread_times * global_count; i++) {
-        assert(read(pipes[0], buf, 100));
-        assert(write(pipes[3], "test", 4));
+        assert(read(pipes[0], buf, 100) == 4);
+        assert(write(pipes[3], "test", 4) == 4);
     }
     return NULL;
 }
@@ -52,15 +52,14 @@ BEGIN_TEST_PREP(switch_thread)
     void *args;
 
     switch_thread_times = times;
-    global_count = 100;
     pipe(pipes);
     pipe(pipes+2);
     pthread_create(&k, NULL, &child_thread, args);
 
-    for (int i = 0; i < switch_thread_times * global_count; i++) {
-        assert(write(pipes[1], "test", 4));
-        assert(read(pipes[2], buf, 100));
-    }
+BEGIN_TEST_LOOP(10000)
+    assert(write(pipes[1], "test", 4) == 4);
+    assert(read(pipes[2], buf, 100) == 4);
+END_TEST_LOOP
 
     close(pipes[0]);
     close(pipes[1]);

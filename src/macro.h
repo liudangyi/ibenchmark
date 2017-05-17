@@ -23,8 +23,8 @@ uint64_t global_count;
 
 #define BEGIN_TEST_LOOP(count) \
         global_count = count; \
-        const upper = times * global_count; \
-        for (int i = 0; i < upper; i++) {
+        const uint64_t upper = times * global_count; \
+        for (uint64_t i = 0; i < upper; i++) {
 
 #define END_TEST_LOOP }
 #define END_TEST_PREP }
