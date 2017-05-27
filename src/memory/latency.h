@@ -50,13 +50,13 @@ void test_mem_latency_32k(int times) { general_latency_test(32 << 10, times, 2e7
 void test_mem_latency_64k(int times) { general_latency_test(64 << 10, times, 1e7); }
 void test_mem_latency_128k(int times) { general_latency_test(128 << 10, times, 1e7); }
 void test_mem_latency_256k(int times) { general_latency_test(256 << 10, times, 1e7); }
-void test_mem_latency_512k(int times) { general_latency_test(512 << 10, times, 1e7); }
+void test_mem_latency_512k(int times) { general_latency_test(512 << 10, times, 4e6); }
 
 void test_mem_latency_1m(int times) { general_latency_test(1 << 20, times, 4e6); }
 void test_mem_latency_2m(int times) { general_latency_test(2 << 20, times, 4e6); }
 void test_mem_latency_4m(int times) { general_latency_test(4 << 20, times, 4e6); }
-void test_mem_latency_8m(int times) { general_latency_test(8 << 20, times, 4e6); }
+void test_mem_latency_8m(int times) { general_latency_test(8 << 20, times, 2e6); }
 void test_mem_latency_16m(int times) { general_latency_test(16 << 20, times, 2e6); }
-void test_mem_latency_32m(int times) { general_latency_test(32 << 20, times, 2e6); }
+void test_mem_latency_32m(int times) { general_latency_test(32 << 20, times, 1e6); }
 void test_mem_latency_64m(int times) { general_latency_test(64 << 20, times, 1e6); }
 void test_mem_latency_128m(int times) { general_latency_test(128 << 20, times, 1e6); }
