@@ -10,10 +10,12 @@
 
 #define TSC_FREQ 2.592000000
 
-void (*_test_func)(int);
+void (*_test_func)();
 
 uint64_t time_single(int times) {
     uint32_t cycles_low0, cycles_high0, cycles_low1, cycles_high1;
+
+    global_times = times;
 
     asm volatile ("cpuid\n\t"
                   "rdtsc\n\t"
@@ -22,7 +24,7 @@ uint64_t time_single(int times) {
                   : "=r" (cycles_high0), "=r" (cycles_low0)
                   :: "%rax", "%rbx", "%rcx", "%rdx");
 
-    _test_func(times);
+    _test_func();
 
     asm volatile ("rdtscp\n\t"
                   "mov %%edx, %0\n\t"

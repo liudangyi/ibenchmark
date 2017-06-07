@@ -37,10 +37,8 @@ END_TEST_LOOP
 END_TEST_PREP
 
 
-int switch_thread_times;
-
 void *child_thread(void *args) {
-    for (int i = 0; i < switch_thread_times * global_count; i++) {
+    for (int i = 0; i < global_times * global_count; i++) {
         assert(read(pipes[0], buf, 100) == 4);
         assert(write(pipes[3], "test", 4) == 4);
     }
@@ -51,7 +49,6 @@ BEGIN_TEST_PREP(switch_thread)
     pthread_t k;
     void *args;
 
-    switch_thread_times = times;
     pipe(pipes);
     pipe(pipes+2);
     pthread_create(&k, NULL, &child_thread, args);

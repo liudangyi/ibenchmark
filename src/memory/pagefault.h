@@ -8,7 +8,7 @@ BEGIN_TEST_PREP(mem_pagefault)
     size_t size = 256 << 20; // 256 MB
     volatile uint8_t *data = mmap(0, size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (errno) {
-      fprintf(stderr, "mmap: %s\n", strerror(errno));
+      perror("mmap");
       exit(-1);
     }
 BEGIN_TEST_LOOP((size >> 12) / 2) // page size, divided by 2 since we will time times here

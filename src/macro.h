@@ -10,6 +10,7 @@
 #include <x86intrin.h>
 
 uint64_t global_count;
+int global_times;
 
 #define BEGIN_TEST(name, count) \
     BEGIN_TEST_PREP(name) \
@@ -19,11 +20,11 @@ uint64_t global_count;
 
 #define BEGIN_TEST_PREP(name) \
     __attribute__((noinline)) \
-    void test_##name(int times) {
+    void test_##name() {
 
 #define BEGIN_TEST_LOOP(count) \
         global_count = count; \
-        const uint64_t upper = times * global_count; \
+        const uint64_t upper = global_times * global_count; \
         for (uint64_t i = 0; i < upper; i++) {
 
 #define END_TEST_LOOP }
