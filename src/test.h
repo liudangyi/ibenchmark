@@ -9,3 +9,10 @@
 #include "memory/latency.h"
 #include "memory/bandwidth.h"
 #include "memory/pagefault.h"
+
+#include "network/rtt.h"
+#include "network/bandwidth.h"
+#include "network/overhead.h"
+
+#include "fs/local.h"
+#include "fs/cache.h"

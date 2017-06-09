@@ -17,7 +17,7 @@ typedef struct linked_list {
  * ....---|----|-------13------|---6---|
  *       tag         index       offset
  */
-void general_latency_test(uint64_t size, int times, int times2) {
+void general_latency_test(uint64_t size, int times) {
     linked_list *list = malloc(size);
     linked_list *p = list;
 
@@ -34,29 +34,29 @@ void general_latency_test(uint64_t size, int times, int times2) {
     } else {
       list->next = list;
     }
-BEGIN_TEST_LOOP(times2)
+BEGIN_TEST_LOOP(times)
     p = p->next;
 END_TEST_LOOP
     p->next = p;
     free(list);
 }
 
-void test_mem_latency_1k(int times) { general_latency_test(1 << 10, times, 4e7); }
-void test_mem_latency_2k(int times) { general_latency_test(2 << 10, times, 4e7); }
-void test_mem_latency_4k(int times) { general_latency_test(4 << 10, times, 4e7); }
-void test_mem_latency_8k(int times) { general_latency_test(8 << 10, times, 4e7); }
-void test_mem_latency_16k(int times) { general_latency_test(16 << 10, times, 2e7); }
-void test_mem_latency_32k(int times) { general_latency_test(32 << 10, times, 2e7); }
-void test_mem_latency_64k(int times) { general_latency_test(64 << 10, times, 1e7); }
-void test_mem_latency_128k(int times) { general_latency_test(128 << 10, times, 1e7); }
-void test_mem_latency_256k(int times) { general_latency_test(256 << 10, times, 1e7); }
-void test_mem_latency_512k(int times) { general_latency_test(512 << 10, times, 1e7); }
+void test_mem_latency_1k() { general_latency_test(1 << 10, 4e7); }
+void test_mem_latency_2k() { general_latency_test(2 << 10, 4e7); }
+void test_mem_latency_4k() { general_latency_test(4 << 10, 4e7); }
+void test_mem_latency_8k() { general_latency_test(8 << 10, 4e7); }
+void test_mem_latency_16k() { general_latency_test(16 << 10, 2e7); }
+void test_mem_latency_32k() { general_latency_test(32 << 10, 2e7); }
+void test_mem_latency_64k() { general_latency_test(64 << 10, 1e7); }
+void test_mem_latency_128k() { general_latency_test(128 << 10, 1e7); }
+void test_mem_latency_256k() { general_latency_test(256 << 10, 1e7); }
+void test_mem_latency_512k() { general_latency_test(512 << 10, 4e6); }
 
-void test_mem_latency_1m(int times) { general_latency_test(1 << 20, times, 4e6); }
-void test_mem_latency_2m(int times) { general_latency_test(2 << 20, times, 4e6); }
-void test_mem_latency_4m(int times) { general_latency_test(4 << 20, times, 4e6); }
-void test_mem_latency_8m(int times) { general_latency_test(8 << 20, times, 4e6); }
-void test_mem_latency_16m(int times) { general_latency_test(16 << 20, times, 2e6); }
-void test_mem_latency_32m(int times) { general_latency_test(32 << 20, times, 2e6); }
-void test_mem_latency_64m(int times) { general_latency_test(64 << 20, times, 1e6); }
-void test_mem_latency_128m(int times) { general_latency_test(128 << 20, times, 1e6); }
+void test_mem_latency_1m() { general_latency_test(1 << 20, 4e6); }
+void test_mem_latency_2m() { general_latency_test(2 << 20, 4e6); }
+void test_mem_latency_4m() { general_latency_test(4 << 20, 4e6); }
+void test_mem_latency_8m() { general_latency_test(8 << 20, 2e6); }
+void test_mem_latency_16m() { general_latency_test(16 << 20, 2e6); }
+void test_mem_latency_32m() { general_latency_test(32 << 20, 1e6); }
+void test_mem_latency_64m() { general_latency_test(64 << 20, 1e6); }
+void test_mem_latency_128m() { general_latency_test(128 << 20, 1e6); }
