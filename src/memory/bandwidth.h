@@ -13,10 +13,11 @@ BEGIN_TEST_PREP(mem_bandwidth_r)
     const size_t size = 64 << 20;
     volatile uint64_t *array = malloc(size);
     const size_t length = size / sizeof(uint64_t);
-    int xor = 0;
+    uint64_t xor = 0;
 BEGIN_TEST_LOOP(1e8)
     xor ^= array[i % length];
 END_TEST_LOOP
+    array[0] = xor;
     global_count *= sizeof(uint64_t);
 END_TEST_PREP
 
