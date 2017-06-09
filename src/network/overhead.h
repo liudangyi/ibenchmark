@@ -12,8 +12,8 @@ void *overhead_server_accept(void *sockfd_ptr) {
     uint32_t addr_size = sizeof(client_addr);
     char buffer[16];
 
-    for (int i = 0; i < global_count * global_times; i++) {
-        int connfd = check_error(accept(sockfd, &client_addr, &addr_size));
+    while (1) {
+        int connfd = check_error(accept(sockfd, (struct sockaddr*) &client_addr, &addr_size));
         check_error(recv(connfd, buffer, 16, 0));
         check_error(close(connfd));
     }
@@ -32,7 +32,7 @@ int overhead_server(pthread_t *tid) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    check_error(bind(sockfd, &serv_addr, sizeof(serv_addr)));
+    check_error(bind(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
     check_error(listen(sockfd, 5));
 
     if (tid) {
@@ -51,18 +51,18 @@ void overhead_client(const char *addr) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = inet_addr(addr);
 
-    BEGIN_TEST_LOOP(global_count)
+    BEGIN_TEST_ONCE
         int sockfd = check_error(socket(PF_INET, SOCK_STREAM, 0));
-        check_error(connect(sockfd, &serv_addr, sizeof(serv_addr)));
+        check_error(connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
         check_error(close(sockfd));
-    END_TEST_LOOP
+    END_TEST_ONCE
 }
 
-BEGIN_TEST_PREP(tcp_overhead)
-    pthread_t tid;
+pthread_t overhead_tid;
 
-    global_count = 100;
-    overhead_server(&tid);
+BEGIN_TEST_PREP(tcp_overhead)
+    if (!overhead_tid) {
+        overhead_server(&overhead_tid);
+    }
     overhead_client("127.0.0.1");
-    pthread_join(tid, NULL);
 END_TEST_PREP

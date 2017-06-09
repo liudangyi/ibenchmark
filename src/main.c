@@ -38,6 +38,7 @@ uint64_t time_single(int times) {
 }
 
 uint64_t time_delta() {
+    time_single(1); // run once
     return time_single(2) - time_single(1);
 }
 

@@ -21,7 +21,8 @@ def build():
     global TESTS_MAP
     if not skip_build():
         print('Building...')
-        cmd = 'cd {} && mkdir -p build && cd build && clang -O2 --save-temps ../src/main.c -o main'.format(ROOT)
+        cmd = 'cd {} && mkdir -p build && cd build && \
+            clang -O2 -Werror --save-temps ../src/main.c -o main'.format(ROOT)
         process = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
         if process.returncode != 0:
@@ -30,7 +31,8 @@ def build():
             raise Exception('clang exits non-zero!')
         TESTS_MAP = None
     if TESTS_MAP is None:
-        stdout, _ = Popen('nm {}/build/main | grep "^0"'.format(ROOT), stdout=PIPE, shell=True).communicate()
+        cmd = 'nm {}/build/main | grep "^0"'.format(ROOT)
+        stdout, _ = Popen(cmd, stdout=PIPE, shell=True).communicate()
         TESTS_MAP = {}
         for line in stdout.decode().splitlines():
             addr, _, name = line.split()
@@ -49,13 +51,15 @@ def run_test(name, repeat=10):
     res = []
     start = time.time()
     for _ in range(repeat):
-        process = Popen('{}/build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name]), stdout=PIPE, stderr=PIPE, shell=True)
+        cmd = '{}/build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name])
+        process = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
         stdout, stderr = process.communicate()
         if process.returncode != 0 or stderr != '':
             sys.stderr.write(stderr.decode())
             sys.stdout.write(stdout.decode())
-            print('Test {} returns {}'.format(name, process.returncode), file=sys.stderr)
-            raise Exception('Test {} returns {}'.format(name, process.returncode))
+            err_msg = 'Test {} returns {}'.format(name, process.returncode)
+            print(err_msg, file=sys.stderr)
+            raise Exception(err_msg)
         else:
             for line in stdout.decode().splitlines():
                 match = re.search(r'cycles = ([\d.]+)', line)

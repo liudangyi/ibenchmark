@@ -27,6 +27,11 @@ int global_times;
         const uint64_t upper = global_times * global_count; \
         for (uint64_t i = 0; i < upper; i++) {
 
+#define BEGIN_TEST_ONCE \
+        global_count = 1; \
+        if (global_times == 2) {
+
+#define END_TEST_ONCE }
 #define END_TEST_LOOP }
 #define END_TEST_PREP }
 

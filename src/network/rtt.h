@@ -1,6 +1,7 @@
 #include <pthread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define check_error(val) _check_error(val, __FILE__, __LINE__, __func__)
 
@@ -18,19 +19,21 @@ void *rtt_server_accept(void *sockfd_ptr) {
     int sockfd = *(int *)sockfd_ptr;
     struct sockaddr_in client_addr;
     uint32_t addr_size = sizeof(client_addr);
-    int connfd = check_error(accept(sockfd, &client_addr, &addr_size));
     char buffer[16];
-    int count = 16;
 
     while (1) {
-        count = recv(connfd, buffer, 16, 0);
-        if (count == 0) {
-            break;
+        int connfd = check_error(accept(sockfd, (struct sockaddr*) &client_addr, &addr_size));
+
+        while (1) {
+            int count = recv(connfd, buffer, 16, 0);
+            if (count == 0) {
+                break;
+            }
+            send(connfd, buffer, count, 0);
         }
-        send(connfd, buffer, count, 0);
+        close(connfd);
     }
 
-    close(connfd);
     close(sockfd);
     return NULL;
 }
@@ -45,7 +48,7 @@ void rtt_server(pthread_t *tid) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    check_error(bind(sockfd, &serv_addr, sizeof(serv_addr)));
+    check_error(bind(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
     check_error(listen(sockfd, 5));
 
     if (tid) {
@@ -64,7 +67,7 @@ void rtt_client(const char *addr) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = inet_addr(addr);
 
-    check_error(connect(sockfd, &serv_addr, sizeof(serv_addr)));
+    check_error(connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
     char buffer[16] = { 'h', 'e', 'l', 'l', 'o' };
     int count = 5;
 
@@ -78,10 +81,11 @@ void rtt_client(const char *addr) {
     close(sockfd);
 }
 
-BEGIN_TEST_PREP(tcp_rtt)
-    pthread_t tid;
+pthread_t rtt_tid;
 
-    rtt_server(&tid);
+BEGIN_TEST_PREP(tcp_rtt)
+    if (!rtt_tid) {
+        rtt_server(&rtt_tid);
+    }
     rtt_client("127.0.0.1");
-    pthread_join(tid, NULL);
 END_TEST_PREP

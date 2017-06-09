@@ -6,19 +6,20 @@ void *bandwidth_server_accept(void *sockfd_ptr) {
     int sockfd = *(int *)sockfd_ptr;
     struct sockaddr_in client_addr;
     uint32_t addr_size = sizeof(client_addr);
-    int connfd = check_error(accept(sockfd, &client_addr, &addr_size));
-    const int SIZE = 1 << 26; // 64 MB
+    const int SIZE = 32 << 20; // 32 MB
     char *buffer = malloc(SIZE);
-    int count;
 
     while (1) {
-        count = recv(connfd, buffer, SIZE, 0);
-        if (count == 0) {
-            break;
-        }
-    }
+        int connfd = check_error(accept(sockfd, (struct sockaddr*) &client_addr, &addr_size));
 
-    close(connfd);
+        while (1) {
+            int count = recv(connfd, buffer, SIZE, 0);
+            if (count == 0) {
+                break;
+            }
+        }
+        close(connfd);
+    }
     close(sockfd);
     return NULL;
 }
@@ -33,7 +34,7 @@ void bandwidth_server(pthread_t *tid) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    check_error(bind(sockfd, &serv_addr, sizeof(serv_addr)));
+    check_error(bind(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
     check_error(listen(sockfd, 5));
 
     if (tid) {
@@ -52,8 +53,8 @@ void bandwidth_client(const char *addr) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = inet_addr(addr);
 
-    check_error(connect(sockfd, &serv_addr, sizeof(serv_addr)));
-    const int SIZE = 1 << 26; // 64 MB
+    check_error(connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
+    const int SIZE = 32 << 20; // 32 MB
     char *buffer = malloc(SIZE);
     int count;
 
@@ -65,10 +66,11 @@ void bandwidth_client(const char *addr) {
     close(sockfd);
 }
 
-BEGIN_TEST_PREP(tcp_bandwidth_64m)
-    pthread_t tid;
+pthread_t bandwidth_tid;
 
-    bandwidth_server(&tid);
+BEGIN_TEST_PREP(tcp_bandwidth_64m)
+    if (!bandwidth_tid) {
+        bandwidth_server(&bandwidth_tid);
+    }
     bandwidth_client("127.0.0.1");
-    pthread_join(tid, NULL);
 END_TEST_PREP
