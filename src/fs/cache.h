@@ -1,6 +1,28 @@
+#include <unistd.h>
+#include <fcntl.h>
+
+#define BLOCK_SIZE 4096 // diskutil info disk0s2
+
+int fs_tmpfile;
+char buffer[BLOCK_SIZE];
+
+int init_tmpfile(char *dir, uint64_t size) {
+    char filename[64];
+    sprintf(filename, "%s/bigfile-%llum", dir, size >> 20);
+    fs_tmpfile = open(filename, O_RDONLY);
+    if (fs_tmpfile == -1) {
+        int fd = check_error(open(filename, O_CREAT | O_WRONLY));
+        for (uint64_t i = 0; i < size / BLOCK_SIZE; i++) {
+            write(fd, buffer, BLOCK_SIZE);
+        }
+        check_error(close(fd));
+        fs_tmpfile = check_error(open(filename, O_RDONLY));
+    }
+    return fs_tmpfile;
+}
+
 void init_tmpfile_with_cache(uint64_t size) {
-    init_tmpfile(size);
-    check_error(fcntl(fs_tmpfile, F_NOCACHE, 0));
+    init_tmpfile("/tmp", size);
 }
 
 void fs_cache_seq(uint64_t size) {

@@ -14,5 +14,7 @@
 #include "network/bandwidth.h"
 #include "network/overhead.h"
 
-#include "fs/local.h"
 #include "fs/cache.h"
+#include "fs/local.h"
+#include "fs/remote.h"
+#include "fs/contention.h"

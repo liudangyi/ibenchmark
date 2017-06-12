@@ -1,29 +1,22 @@
-#include <unistd.h>
-#include <fcntl.h>
+void purge() {
+  if (system("sudo purge")) {
+      puts(
+          "`sudo purge` fails. Please add the following line to your visudo\n"
+          "\t%admin\t\tALL = (root) NOPASSWD: /usr/sbin/purge"
+      );
+      exit(1);
+  }
+}
 
-#define BLOCK_SIZE 4096 // diskutil info disk0s2
-
-int fs_tmpfile;
-char buffer[BLOCK_SIZE];
-
-void init_tmpfile(uint64_t size) {
-    char filename[64];
-    sprintf(filename, "/tmp/bigfile-%llum", size >> 20);
-    fs_tmpfile = open(filename, O_RDONLY);
-    if (fs_tmpfile == -1) {
-        int fd = check_error(open(filename, O_CREAT | O_WRONLY));
-        for (uint64_t i = 0; i < size / BLOCK_SIZE; i++) {
-            write(fd, buffer, BLOCK_SIZE);
-        }
-        check_error(close(fd));
-        fs_tmpfile = check_error(open(filename, O_RDONLY));
-    }
+void init_local_tmpfile(uint64_t size) {
+    init_tmpfile("/tmp", size);
     check_error(fcntl(fs_tmpfile, F_NOCACHE, 1));
+    purge();
 }
 
 void fs_local_seq(uint64_t size) {
     if (!fs_tmpfile) {
-        init_tmpfile(size);
+        init_local_tmpfile(size);
     }
     size /= BLOCK_SIZE;
     BEGIN_TEST_ONCE
@@ -34,6 +27,8 @@ void fs_local_seq(uint64_t size) {
     global_count = size;
 }
 
+void test_fs_local_seq_16m() { fs_local_seq(16ull << 20); }
+void test_fs_local_seq_32m() { fs_local_seq(32ull << 20); }
 void test_fs_local_seq_64m() { fs_local_seq(64ull << 20); }
 void test_fs_local_seq_128m() { fs_local_seq(128ull << 20); }
 void test_fs_local_seq_256m() { fs_local_seq(256ull << 20); }
@@ -47,7 +42,7 @@ void test_fs_local_seq_16g() { fs_local_seq(16ull << 30); }
 
 void fs_local_rand(uint64_t size) {
     if (!fs_tmpfile) {
-        init_tmpfile(size);
+        init_local_tmpfile(size);
     }
     size /= BLOCK_SIZE;
     BEGIN_TEST_ONCE
@@ -60,6 +55,8 @@ void fs_local_rand(uint64_t size) {
     global_count = size;
 }
 
+void test_fs_local_rand_16m() { fs_local_rand(16ull << 20); }
+void test_fs_local_rand_32m() { fs_local_rand(32ull << 20); }
 void test_fs_local_rand_64m() { fs_local_rand(64ull << 20); }
 void test_fs_local_rand_128m() { fs_local_rand(128ull << 20); }
 void test_fs_local_rand_256m() { fs_local_rand(256ull << 20); }
