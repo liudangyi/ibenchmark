@@ -21,7 +21,7 @@ def build():
     global TESTS_MAP
     if not skip_build():
         print('Building...')
-        cmd = 'cd {} && mkdir -p build && cd build && \
+        cmd = 'cd "{}" && mkdir -p build && cd build && \
             clang -O2 -Werror --save-temps ../src/main.c -o main'.format(ROOT)
         process = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
@@ -51,7 +51,7 @@ def run_test(name, repeat=10):
     res = []
     start = time.time()
     for _ in range(repeat):
-        cmd = '{}/build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name])
+        cmd = 'cd "{}" && build/main {} {} {}'.format(ROOT, 1, name, TESTS_MAP[name])
         process = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
         stdout, stderr = process.communicate()
         if process.returncode != 0 or stderr != '':
