@@ -27,6 +27,10 @@ void fs_local_seq(uint64_t size) {
     global_count = size;
 }
 
+void test_fs_local_seq_1m() { fs_local_seq(1ull << 20); }
+void test_fs_local_seq_2m() { fs_local_seq(2ull << 20); }
+void test_fs_local_seq_4m() { fs_local_seq(4ull << 20); }
+void test_fs_local_seq_8m() { fs_local_seq(8ull << 20); }
 void test_fs_local_seq_16m() { fs_local_seq(16ull << 20); }
 void test_fs_local_seq_32m() { fs_local_seq(32ull << 20); }
 void test_fs_local_seq_64m() { fs_local_seq(64ull << 20); }
@@ -55,6 +59,10 @@ void fs_local_rand(uint64_t size) {
     global_count = size;
 }
 
+void test_fs_local_rand_1m() { fs_local_rand(1ull << 20); }
+void test_fs_local_rand_2m() { fs_local_rand(2ull << 20); }
+void test_fs_local_rand_4m() { fs_local_rand(4ull << 20); }
+void test_fs_local_rand_8m() { fs_local_rand(8ull << 20); }
 void test_fs_local_rand_16m() { fs_local_rand(16ull << 20); }
 void test_fs_local_rand_32m() { fs_local_rand(32ull << 20); }
 void test_fs_local_rand_64m() { fs_local_rand(64ull << 20); }

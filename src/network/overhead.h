@@ -43,7 +43,7 @@ int overhead_server(pthread_t *tid) {
     return sockfd;
 }
 
-void overhead_client(const char *addr) {
+void overhead_client(const char *addr, int setup) {
     struct sockaddr_in serv_addr;
 
     memset(&serv_addr, 0, sizeof(serv_addr));
@@ -51,18 +51,41 @@ void overhead_client(const char *addr) {
     serv_addr.sin_port = htons(5000);
     serv_addr.sin_addr.s_addr = inet_addr(addr);
 
-    BEGIN_TEST_ONCE
+    if (setup) {
+        timeit_start();
         int sockfd = check_error(socket(PF_INET, SOCK_STREAM, 0));
         check_error(connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
+        timeit_end();
         check_error(close(sockfd));
-    END_TEST_ONCE
+    } else {
+        int sockfd = check_error(socket(PF_INET, SOCK_STREAM, 0));
+        check_error(connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)));
+        timeit_start();
+        check_error(close(sockfd));
+        timeit_end();
+    }
 }
 
 pthread_t overhead_tid;
 
-BEGIN_TEST_PREP(tcp_overhead)
+BEGIN_TEST_PREP(tcp_overhead_setup)
     if (!overhead_tid) {
         overhead_server(&overhead_tid);
     }
-    overhead_client("127.0.0.1");
+    overhead_client("127.0.0.1", 1);
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_overhead_teardown)
+    if (!overhead_tid) {
+        overhead_server(&overhead_tid);
+    }
+    overhead_client("127.0.0.1", 0);
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_overhead_remote_setup)
+    overhead_client("100.83.8.10", 1);
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_overhead_remote_teardown)
+    overhead_client("100.83.8.10", 0);
 END_TEST_PREP

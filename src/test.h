@@ -18,3 +18,5 @@
 #include "fs/local.h"
 #include "fs/remote.h"
 #include "fs/contention.h"
+
+#include "memory/pagefault2.h"

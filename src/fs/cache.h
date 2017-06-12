@@ -8,7 +8,11 @@ char buffer[BLOCK_SIZE];
 
 int init_tmpfile(char *dir, uint64_t size) {
     char filename[64];
-    sprintf(filename, "%s/bigfile-%llum", dir, size >> 20);
+    if (size >> 20) {
+      sprintf(filename, "%s/bigfile-%llum", dir, size >> 20);
+    } else {
+      sprintf(filename, "%s/bigfile-%lluk", dir, size >> 10);
+    }
     fs_tmpfile = open(filename, O_RDONLY);
     if (fs_tmpfile == -1) {
         int fd = check_error(open(filename, O_CREAT | O_WRONLY));

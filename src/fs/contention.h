@@ -1,4 +1,4 @@
-#define CONTENTION_FILE_SIZE (512 << 10)
+#define CONTENTION_FILE_SIZE (1 << 20)
 
 void *fs_contention_thread(void *arg) {
     int fd = init_tmpfile("/tmp", CONTENTION_FILE_SIZE);

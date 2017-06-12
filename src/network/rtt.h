@@ -71,7 +71,7 @@ void rtt_client(const char *addr) {
     char buffer[16] = { 'h', 'e', 'l', 'l', 'o' };
     int count = 5;
 
-    BEGIN_TEST_LOOP(1000)
+    BEGIN_TEST_LOOP(10)
         count = send(sockfd, buffer, count, 0);
         assert(check_error(count) == 5);
         count = recv(sockfd, buffer, 16, 0);
@@ -88,4 +88,12 @@ BEGIN_TEST_PREP(tcp_rtt)
         rtt_server(&rtt_tid);
     }
     rtt_client("127.0.0.1");
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_rtt_server)
+    rtt_server(NULL);
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_rtt_client)
+    rtt_client("70.95.174.115");
 END_TEST_PREP

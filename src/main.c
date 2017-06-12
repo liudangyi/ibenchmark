@@ -6,6 +6,7 @@
 #include <x86intrin.h>
 #include <unistd.h>
 #include <math.h>
+#include "timeit.h"
 #include "test.h"
 
 #define TSC_FREQ 2.592000000
@@ -39,6 +40,10 @@ uint64_t time_single(int times) {
 
 uint64_t time_delta() {
     time_single(1); // run once
+    if (timeit_start_at) {
+        global_count = 1;
+        return timeit_start_at;
+    }
     return time_single(2) - time_single(1);
 }
 

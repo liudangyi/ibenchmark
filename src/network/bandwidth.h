@@ -58,19 +58,27 @@ void bandwidth_client(const char *addr) {
     char *buffer = malloc(SIZE);
     int count;
 
-    BEGIN_TEST_LOOP(4)
+    BEGIN_TEST_ONCE
         count = send(sockfd, buffer, SIZE, 0);
         assert(check_error(count) == SIZE);
-    END_TEST_LOOP
+    END_TEST_ONCE
 
     close(sockfd);
 }
 
 pthread_t bandwidth_tid;
 
-BEGIN_TEST_PREP(tcp_bandwidth_64m)
+BEGIN_TEST_PREP(tcp_bandwidth)
     if (!bandwidth_tid) {
         bandwidth_server(&bandwidth_tid);
     }
     bandwidth_client("127.0.0.1");
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_bandwidth_server)
+    bandwidth_server(NULL);
+END_TEST_PREP
+
+BEGIN_TEST_PREP(tcp_bandwidth_client)
+    bandwidth_client("70.95.174.115");
 END_TEST_PREP
